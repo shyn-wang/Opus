@@ -1,7 +1,12 @@
+// set up spotify api
 const Spotify = require('spotify-web-api-js');
 const spotifyApi = new Spotify();
 
+// import request to make post requests
 const request = require('request');
+
+// import library file
+const library = require('./library');
 
 function authenticate() {
     // retrieve access token via client credentials flow
@@ -27,16 +32,41 @@ function authenticate() {
             console.log(response);
             console.log(body.access_token);
             console.log(body.expires_in);
-        
+
+            initializePlaylists();
+
         } else {
             console.log(error);
         }
     });
 }   
 
-function getTracks() {
+let leftSideTrack;
+let rightSideTrack;
 
+// array containing the four era objects
+const eras = [
+    library.baroque,
+    library.classical,
+    library.romantic,
+    library.modern
+]
+
+// set the playlist property in each era object to an array containing all the tracks in the playlist on spotify
+function initializePlaylists() {
+    for (const era of eras) {
+        spotifyApi.getPlaylistTracks(era.playlistID, function(err, data) {
+            if (err) {
+                console.log(err);
+            
+            } else {
+                era.playlist = data.items;
+                console.log(era.playlist);
+            }
+        });
+    }
 }
 
-// make global
+// enable functions to be accessed globally
 window.authenticate = authenticate;
+window.initializePlaylists = initializePlaylists;
