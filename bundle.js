@@ -1,18 +1,19 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 // class representing each era
 class era {
-    constructor(elo, playlist, playlistID) {
+    constructor(elo, playlist, playlistID, numOfPlaylistTracks) {
         this.elo = elo;
         this.playlist = playlist;
         this.playlistID = playlistID;
+        this.numOfPlaylistTracks = numOfPlaylistTracks;
     }
 }
 
 // create objects for each era
-let baroque = new era(1500, [], '7HQ42wa60yV6mPU2c27wWi');
-let classical = new era(1500, [], '1MBOHYCHDlP2465YFzvI7d');
-let romantic = new era(1500, [], '5CqdLCYANgrFICViNS6N5x');
-let modern = new era(1500, [], '2lUzj0RZHxXzFgPW3UaLqP');
+let baroque = new era(1500, [], '7HQ42wa60yV6mPU2c27wWi', 0);
+let classical = new era(1500, [], '1MBOHYCHDlP2465YFzvI7d', 0);
+let romantic = new era(1500, [], '5CqdLCYANgrFICViNS6N5x', 0);
+let modern = new era(1500, [], '2lUzj0RZHxXzFgPW3UaLqP', 0);
 
 // export objects
 module.exports = {
@@ -51970,15 +51971,59 @@ function initializePlaylists() {
             
             } else {
                 era.playlist = data.items;
+                era.numOfPlaylistTracks = data.total;
+                console.log(data.total);
                 console.log(era.playlist);
             }
         });
     }
 }
 
+// intakes objects containing track info
+function displayTracks(leftTrack, rightTrack) {
+    // left side
+    // const titleLeft = leftTrack
+}
+
+
+// check to see if either the button or the side was clicked
+let leftBtnClick = false;
+let rightBtnClick = false;
+
+function leftClick() {
+    if (leftBtnClick == true) {
+        console.log('btn left clicked');
+        leftBtnClick = false;
+    } else {
+        console.log('side left clicked');
+    }
+}
+
+function rightClick() {
+    if (rightBtnClick == true) {
+        console.log('btn right clicked');
+        rightBtnClick = false;
+    } else {
+        console.log('side right clicked');
+    }
+}
+
+function leftBtn() {
+    leftBtnClick = true;
+}
+
+function rightBtn() {
+    rightBtnClick = true;
+}
+
 // enable functions to be accessed globally
 window.authenticate = authenticate;
 window.initializePlaylists = initializePlaylists;
+window.leftClick = leftClick;
+window.rightClick = rightClick;
+window.leftBtn = leftBtn;
+window.rightBtn = rightBtn;
+window.displayTracks = displayTracks;
 }).call(this)}).call(this,require("buffer").Buffer)
 },{"./library":1,"buffer":225,"request":114,"spotify-web-api-js":129}],170:[function(require,module,exports){
 

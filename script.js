@@ -61,12 +61,56 @@ function initializePlaylists() {
             
             } else {
                 era.playlist = data.items;
+                era.numOfPlaylistTracks = data.total;
+                console.log(data.total);
                 console.log(era.playlist);
             }
         });
     }
 }
 
+// intakes objects containing track info
+function displayTracks(leftTrack, rightTrack) {
+    // left side
+    // const titleLeft = leftTrack
+}
+
+
+// check to see if either the button or the side was clicked
+let leftBtnClick = false;
+let rightBtnClick = false;
+
+function leftClick() {
+    if (leftBtnClick == true) {
+        console.log('btn left clicked');
+        leftBtnClick = false;
+    } else {
+        console.log('side left clicked');
+    }
+}
+
+function rightClick() {
+    if (rightBtnClick == true) {
+        console.log('btn right clicked');
+        rightBtnClick = false;
+    } else {
+        console.log('side right clicked');
+    }
+}
+
+function leftBtn() {
+    leftBtnClick = true;
+}
+
+function rightBtn() {
+    rightBtnClick = true;
+}
+
 // enable functions to be accessed globally
 window.authenticate = authenticate;
 window.initializePlaylists = initializePlaylists;
+window.leftClick = leftClick;
+window.rightClick = rightClick;
+window.leftBtn = leftBtn;
+window.rightBtn = rightBtn;
+window.displayTracks = displayTracks;

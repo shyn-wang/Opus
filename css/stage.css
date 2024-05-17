@@ -1,0 +1,128 @@
+@font-face {
+    font-family: 'circular';
+    src: url('/css/circular-std/CircularStd-Medium.otf');
+  }
+  
+  @font-face {
+    font-family: 'test';
+    src: url('/css/circular-std/CircularStd-Book.otf');
+  }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.stage {
+    display: flex;
+    height: 100vh;
+    position: relative;
+}
+
+.sides {
+    flex: 1;
+    border: 1px solid black;
+    display: flex;
+    position: relative;
+    align-items: center;
+    width: 100px;
+}
+
+.left {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#left {
+    background-color: white;
+}
+
+#right {
+    background-color: white;
+}
+
+#left:hover {
+    background: 
+      linear-gradient(206deg, rgba(117,255,144,0.62), rgba(15,201,220,1)),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='6.97' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+#right:hover {
+    background: 
+      linear-gradient(206deg, rgba(117,255,144,0.62), rgba(15,201,220,1)),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='6.97' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.trackTitle {
+    text-align: center;
+    font-family: 'circular';
+    font-size: 30px;
+    color: rgba(0, 0, 0);
+}
+
+.description {
+    text-align: center;
+    font-family: 'test';
+    font-size: 15px;
+    color: rgb(149, 149, 149);
+    margin-top: -10px;
+    margin-bottom: 30px;
+}
+
+.img {
+    width: 50px;
+    height: 50px;
+}
+
+.container {
+    height: 64px;
+    background-color: rgba(243, 242, 242, 0.553);
+    border-radius: 100px;
+    position: absolute;
+    top: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    display: flex;
+    border-color: transparent;
+}
+
+.container:hover {
+    cursor: pointer;
+    background: #ffffff;
+    box-shadow: 0 0 5px #ffffffab,
+                0 0 20px #ffffffab,
+                0 0 60px #ffffffab,
+                0 0 150px #ffffffab;
+}
+
+.spotifyBtn {
+    background-color: transparent;
+    border-style: solid;
+    border-color: transparent;
+}
+
+.spotifyText {
+    margin-top: 18px;
+    margin-left: 5px;
+    font-size: 15px;
+    font-family: 'circular';
+}
+
+

@@ -3,11 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/stage.css"/>
     <title>Opus</title>
 </head>
-<body>
-    
+<body onload="authenticate()">
+    <div class = 'stage'>
+        <div class = 'sides' id ='left' onclick="leftClick()">
+            <div class ='left'>
+                <button type="button" class="container" onclick="leftBtn()">
+                    <div class = "spotifyBtn">
+                        <img src="/images/spotifyicon.png" alt="https://scaler.com/topics/images/creating-image-button-in-html.webp" class="img">
+                    </div>
+                    <div class="spotifyText">
+                        Open in Spotify
+                    </div>
+                </button>
+                <img src="https://m.media-amazon.com/images/I/917TLH5R2KL._UF1000,1000_QL80_.jpg" alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb6ZLTUYD1PLuXal9P8O8fPyjR6TBH0j5_ToYK3j3LUz_mzZx4LkNMaNWJBjeDFI-9Urc&usqp=CAU" width = 260' height = '260'>
+                <h1 class="trackTitle">Test</h1>
+                <h3 class="description">Interperter, Composer</h1>
+                <audio src="" controls></audio>
+            </div>
+        </div>
+        <div class = 'sides' id ='right' onclick="rightClick()">
+            <div class ='right'>
+                <button type="button" class="container" onclick="rightBtn()">
+                    <div class = "spotifyBtn">
+                        <img src="/images/spotifyicon.png" alt="https://scaler.com/topics/images/creating-image-button-in-html.webp" class="img">
+                    </div>
+                    <div class="spotifyText">
+                        Open in Spotify
+                    </div>
+                </button>
+                <img src="https://m.media-amazon.com/images/I/917TLH5R2KL._UF1000,1000_QL80_.jpg" alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb6ZLTUYD1PLuXal9P8O8fPyjR6TBH0j5_ToYK3j3LUz_mzZx4LkNMaNWJBjeDFI-9Urc&usqp=CAU" width = '260' height = '260'>
+                <h1 class="trackTitle">Test</h1>
+                <h3 class="description">Interpreter, Composer</h1>
+                    <audio src="" controls></audio>
+            </div>
+        </div>
+    </div>
+    <script src="bundle.js"></script>
 </body>
 </html>
-
-<!--<audio controls src=""></audio>-->
