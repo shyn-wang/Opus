@@ -1,19 +1,21 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 // class representing each era
 class era {
-    constructor(elo, playlist, playlistID, numOfPlaylistTracks) {
+    constructor(elo, playlist, playlistID, numOfPlaylistTracks, probability, name) {
         this.elo = elo;
         this.playlist = playlist;
         this.playlistID = playlistID;
         this.numOfPlaylistTracks = numOfPlaylistTracks;
+        this.probability = probability;
+        this.name = name;
     }
 }
 
 // create objects for each era
-let baroque = new era(1500, [], '7HQ42wa60yV6mPU2c27wWi', 0);
-let classical = new era(1500, [], '1MBOHYCHDlP2465YFzvI7d', 0);
-let romantic = new era(1500, [], '5CqdLCYANgrFICViNS6N5x', 0);
-let modern = new era(1500, [], '2lUzj0RZHxXzFgPW3UaLqP', 0);
+let baroque = new era(1500, [], '7HQ42wa60yV6mPU2c27wWi', 0, 0.25, 'baroque');
+let classical = new era(1500, [], '1MBOHYCHDlP2465YFzvI7d', 0, 0.25, 'classical');
+let romantic = new era(1500, [], '5CqdLCYANgrFICViNS6N5x', 0, 0.25, 'romantic');
+let modern = new era(1500, [], '2lUzj0RZHxXzFgPW3UaLqP', 0, 0.25, 'modern');
 
 // export objects
 module.exports = {
@@ -51964,6 +51966,7 @@ const eras = [
 
 // set the playlist property in each era object to an array containing all the tracks in the playlist on spotify
 function initializePlaylists() {
+    let counter = 0;
     for (const era of eras) {
         spotifyApi.getPlaylistTracks(era.playlistID, function(err, data) {
             if (err) {
@@ -51974,6 +51977,13 @@ function initializePlaylists() {
                 era.numOfPlaylistTracks = data.total;
                 console.log(data.total);
                 console.log(era.playlist);
+                counter++;
+                console.log(counter);
+
+                if (counter == 4) {
+                    // change to choose initial matchup once displayTracks function is built
+                    selectMatchups();
+                }
             }
         });
     }
@@ -51981,8 +51991,67 @@ function initializePlaylists() {
 
 // intakes objects containing track info
 function displayTracks(leftTrack, rightTrack) {
-    // left side
-    // const titleLeft = leftTrack
+    // **left side**
+    // album cover
+    const coverLeft = leftTrack.album.images[1].url;
+    console.log(coverLeft);
+    // piece title
+    const titleLeft = leftTrack.name;
+    console.log(titleLeft);
+    // performer
+    const performerLeft = leftTrack.artists[1].name;
+    console.log(performerLeft);
+    // composer
+    const composerLeft = leftTrack.artists[0].name;
+    console.log(composerLeft);
+    // preview url
+    const previewLeft = leftTrack.preview_url;
+    console.log(previewLeft);
+    // spotify url
+    spotifyLeft = leftTrack.external_urls.spotify;
+    console.log(spotifyLeft);
+
+    // display info
+    const coverLeftId = document.getElementById('leftCover');
+    const titleLeftId = document.getElementById('leftTitle');
+    const descriptionLeftId = document.getElementById('leftDescription');
+    const previewLeftId = document.getElementById('leftPreview');
+    
+    coverLeftId.src = coverLeft;
+    titleLeftId.innerHTML = titleLeft
+    descriptionLeftId.innerHTML = `${performerLeft}, ${composerLeft}`;
+    previewLeftId.src = previewLeft;
+
+    // **right side**
+    // album cover
+    const coverRight = rightTrack.album.images[1].url;
+    console.log(coverRight);
+    // piece title
+    const titleRight = rightTrack.name;
+    console.log(titleRight);
+    // performer
+    const performerRight = rightTrack.artists[1].name;
+    console.log(performerRight);
+    // composer
+    const composerRight = rightTrack.artists[0].name;
+    console.log(composerRight);
+    // preview url
+    const previewRight = rightTrack.preview_url;
+    console.log(previewRight);
+    // spotify url
+    spotifyRight = rightTrack.external_urls.spotify;
+    console.log(spotifyRight);
+
+    // display info
+    const coverRightId = document.getElementById('rightCover');
+    const titleRightId = document.getElementById('rightTitle');
+    const descriptionRightId = document.getElementById('rightDescription');
+    const previewRightId = document.getElementById('rightPreview');
+    
+    coverRightId.src = coverRight;
+    titleRightId.innerHTML = titleRight;
+    descriptionRightId.innerHTML = `${performerRight}, ${composerRight}`;
+    previewRightId.src = previewRight;
 }
 
 
@@ -52008,12 +52077,72 @@ function rightClick() {
     }
 }
 
+// set to spotify url by displayTracks function
+let spotifyLeft;
+
 function leftBtn() {
     leftBtnClick = true;
+    window.open(spotifyLeft, '_blank');
 }
+
+// set to spotfiy url by displayTracks function
+let spotifyRight;
 
 function rightBtn() {
     rightBtnClick = true;
+    window.open(spotifyRight, '_blank');
+}
+
+// select initial matchups
+let initialMatchups = eras;
+shuffleArray(initialMatchups);
+console.log(initialMatchups);
+
+// durstenfeld shuffle
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+let onInitialMatchups = true;
+
+function selectMatchups() {
+    let leftEra;
+    let rightEra;
+    if (onInitialMatchups == true) {
+        leftEra = initialMatchups[0];
+        rightEra = initialMatchups[1];
+        initialMatchups = initialMatchups.splice(2, 2);
+        console.log(initialMatchups);
+
+        if (initialMatchups.length == 0) {
+            onInitialMatchups = false;
+        }
+    } else {
+
+    }
+    getRandomTrack(leftEra, rightEra);
+    // perform elo rating evaluation
+}
+
+function getRandomTrack(leftEra, rightEra) {
+    console.log(leftEra);
+    console.log(rightEra);
+
+    const rangeLeft = leftEra.playlist.length -1;
+    const rangeRight = rightEra.playlist.length -1;
+
+    const leftTrackIndex = Math.floor(Math.random() * (rangeLeft + 1));
+    const rightTrackIndex = Math.floor(Math.random() * (rangeRight + 1));
+
+    const leftTrack = leftEra.playlist[leftTrackIndex];
+    leftEra.playlist = leftEra.playlist.splice(leftTrackIndex, 1);
+    const rightTrack = rightEra.playlist[rightTrackIndex];
+    rightEra.playlist = rightEra.playlist.splice(rightTrackIndex, 1);
+
+    displayTracks(leftTrack.track, rightTrack.track);
 }
 
 // enable functions to be accessed globally
