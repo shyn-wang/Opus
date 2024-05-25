@@ -51953,9 +51953,6 @@ function authenticate() {
     });
 }   
 
-let leftSideTrack;
-let rightSideTrack;
-
 // array containing the four era objects
 const eras = [
     library.baroque,
@@ -52065,6 +52062,7 @@ function leftClick() {
         leftBtnClick = false;
     } else {
         console.log('side left clicked');
+        updateElo(leftEra, rightEra);
     }
 }
 
@@ -52074,6 +52072,7 @@ function rightClick() {
         rightBtnClick = false;
     } else {
         console.log('side right clicked');
+        updateElo(rightEra, leftEra);
     }
 }
 
@@ -52095,6 +52094,7 @@ function rightBtn() {
 
 // select initial matchups
 let initialMatchups = eras;
+let postInitialMatchups = eras;
 shuffleArray(initialMatchups);
 console.log(initialMatchups);
 
@@ -52107,11 +52107,11 @@ function shuffleArray(array) {
 }
 
 let onInitialMatchups = true;
+let leftEra;
+let rightEra;
 
 function selectMatchups() {
-    let leftEra;
-    let rightEra;
-    if (onInitialMatchups == true) {
+    if (onInitialMatchups == false) {
         leftEra = initialMatchups[0];
         rightEra = initialMatchups[1];
         initialMatchups = initialMatchups.splice(2, 2);
@@ -52121,10 +52121,59 @@ function selectMatchups() {
             onInitialMatchups = false;
         }
     } else {
+        let probabilities = [];
 
+        // sort probabilities array to match index of eras array (BAD PRACTICE, NOT SCALABLE -> fix later by guaranteeing arrays are in same order as declaration or other solution)
+        const baroqueIndex = eras.indexOf(library.baroque);
+        const classicalIndex = eras.indexOf(library.classical);
+        const romanticIndex = eras.indexOf(library.romantic);
+        const modernIndex = eras.indexOf(library.modern);
+        const erasZero = eras[0];
+        const erasOne = eras[1];
+        const erasTwo = eras[2];
+        const erasThree = eras[3];
+
+        probabilities.push(erasZero.probability);
+        probabilities.push(erasOne.probability);
+        probabilities.push(erasTwo.probability);
+        probabilities.push(erasThree.probability);
+
+        console.log(probabilities);
+        console.log(`${baroqueIndex}, ${probabilities.indexOf(library.baroque.probability)}`);
+        console.log(`${classicalIndex}, ${probabilities.indexOf(library.classical.probability)}`);
+        console.log(`${romanticIndex}, ${probabilities.indexOf(library.romantic.probability)}`);
+        console.log(`${modernIndex}, ${probabilities.indexOf(library.modern.probability)}`);
+        
+
+        leftEra = selectRandomWithProbability(eras, probabilities);
+        rightEra = selectRandomWithProbability(eras, probabilities);
+        console.log(eras);
+        if (rightEra == leftEra) {
+            while (rightEra == leftEra) {
+                rightEra = selectRandomWithProbability(eras, probabilities);
+            }
+        }
     }
     getRandomTrack(leftEra, rightEra);
-    // perform elo rating evaluation
+}
+
+// select post-initial matchups
+function selectRandomWithProbability(array, probabilities) {
+    // calculate total probability
+    const totalProbability = probabilities.reduce((acc, prob) => acc + prob, 0);
+
+    // generate a random number between 0 and totalProbability
+    const randomNum = Math.random() * totalProbability;
+    console.log(randomNum);
+
+    // iterate through the array and find the element corresponding to the generated random number
+    let cumulativeProbability = 0;
+    for (let i = 0; i < array.length; i++) {
+        cumulativeProbability += probabilities[i];
+        if (randomNum <= cumulativeProbability) {
+            return array[i];
+        }
+    }
 }
 
 function getRandomTrack(leftEra, rightEra) {
@@ -52143,6 +52192,25 @@ function getRandomTrack(leftEra, rightEra) {
     rightEra.playlist = rightEra.playlist.splice(rightTrackIndex, 1);
 
     displayTracks(leftTrack.track, rightTrack.track);
+}
+
+// update elo and probability function: call on side click
+function updateElo(winner, loser) {
+    // calculate expected win probability
+    const winnerRating = winner.elo;
+    const loserRating = loser.elo;
+    const winProbability = 1 / (1 + Math.pow(10, (loserRating - winnerRating) / 400));
+
+    // update Elos
+    const K = 32;
+    const winnerEloGained = 32 * (1 - winProbability);
+    const loserEloLost = 32 * (0 - winProbability);
+    winner.elo = winnerRating + winnerEloGained;
+    loser.elo = loserRating + loserEloLost;
+
+    // update probabilities based on elo gained/lost
+
+
 }
 
 // enable functions to be accessed globally
