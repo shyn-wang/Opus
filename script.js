@@ -181,8 +181,7 @@ function rightBtn() {
 }
 
 // select initial matchups
-let initialMatchups = eras;
-let postInitialMatchups = eras;
+let initialMatchups = eras.slice(); // make copy of eras array so changes are not shared
 shuffleArray(initialMatchups);
 console.log(initialMatchups);
 
@@ -194,19 +193,23 @@ function shuffleArray(array) {
     }
 }
 
+// true when less than two matchups have occured
 let onInitialMatchups = true;
+// tracks the eras on screen
 let leftEra;
 let rightEra;
 
 function selectMatchups() {
-    if (onInitialMatchups == false) {
+    if (onInitialMatchups == true) {
         leftEra = initialMatchups[0];
         rightEra = initialMatchups[1];
-        initialMatchups = initialMatchups.splice(2, 2);
+        initialMatchups.splice(0, 2);
         console.log(initialMatchups);
+        console.log(eras);
 
         if (initialMatchups.length == 0) {
             onInitialMatchups = false;
+            console.log(onInitialMatchups);
         }
     } else {
         let probabilities = [];
@@ -216,6 +219,7 @@ function selectMatchups() {
         const classicalIndex = eras.indexOf(library.classical);
         const romanticIndex = eras.indexOf(library.romantic);
         const modernIndex = eras.indexOf(library.modern);
+
         const erasZero = eras[0];
         const erasOne = eras[1];
         const erasTwo = eras[2];
@@ -265,8 +269,10 @@ function selectRandomWithProbability(array, probabilities) {
 }
 
 function getRandomTrack(leftEra, rightEra) {
+    console.log('fhwioafhdaw');
     console.log(leftEra);
     console.log(rightEra);
+    console.log(leftEra.playlist);
 
     const rangeLeft = leftEra.playlist.length -1;
     const rangeRight = rightEra.playlist.length -1;
@@ -275,9 +281,10 @@ function getRandomTrack(leftEra, rightEra) {
     const rightTrackIndex = Math.floor(Math.random() * (rangeRight + 1));
 
     const leftTrack = leftEra.playlist[leftTrackIndex];
-    leftEra.playlist = leftEra.playlist.splice(leftTrackIndex, 1);
+    leftEra.playlist.splice(leftTrackIndex, 1);
+    console.log(leftEra.playlist);
     const rightTrack = rightEra.playlist[rightTrackIndex];
-    rightEra.playlist = rightEra.playlist.splice(rightTrackIndex, 1);
+    rightEra.playlist.splice(rightTrackIndex, 1);
 
     displayTracks(leftTrack.track, rightTrack.track);
 }
@@ -305,6 +312,9 @@ function updateElo(winner, loser) {
     } else {
         loser.probability += loserUpdatedProbability;
     }
+
+    // select next matchup
+    selectMatchups();
 }
 
 // enable functions to be accessed globally
