@@ -52127,10 +52127,6 @@ function selectMatchups() {
         let probabilities = [];
 
         // sort probabilities array to match index of eras array (BAD PRACTICE, NOT SCALABLE -> fix later by guaranteeing arrays are in same order as declaration or other solution)
-        const baroqueIndex = eras.indexOf(library.baroque);
-        const classicalIndex = eras.indexOf(library.classical);
-        const romanticIndex = eras.indexOf(library.romantic);
-        const modernIndex = eras.indexOf(library.modern);
 
         const erasZero = eras[0];
         const erasOne = eras[1];
@@ -52142,11 +52138,12 @@ function selectMatchups() {
         probabilities.push(erasTwo.probability);
         probabilities.push(erasThree.probability);
 
+        // if the index of each era's probability in the probabilities array matches the corresponding era's index in the eras array, the probabilities array was correctly sorted
         console.log(probabilities);
-        console.log(`${baroqueIndex}, ${probabilities.indexOf(library.baroque.probability)}`);
-        console.log(`${classicalIndex}, ${probabilities.indexOf(library.classical.probability)}`);
-        console.log(`${romanticIndex}, ${probabilities.indexOf(library.romantic.probability)}`);
-        console.log(`${modernIndex}, ${probabilities.indexOf(library.modern.probability)}`);
+        console.log(`${eras.indexOf(library.baroque)}, ${probabilities.indexOf(library.baroque.probability)}`);
+        console.log(`${eras.indexOf(library.classical)}, ${probabilities.indexOf(library.classical.probability)}`);
+        console.log(`${eras.indexOf(library.romantic)}, ${probabilities.indexOf(library.romantic.probability)}`);
+        console.log(`${eras.indexOf(library.modern)}, ${probabilities.indexOf(library.modern.probability)}`);
         
 
         leftEra = selectRandomWithProbability(eras, probabilities);
@@ -52201,6 +52198,10 @@ function getRandomTrack(leftEra, rightEra) {
     displayTracks(leftTrack.track, rightTrack.track);
 }
 
+// track number of rounds elapsed
+let numOfRounds = 0;
+
+
 // update elo and probability function: call on side click
 function updateElo(winner, loser) {
     // calculate expected win probability
@@ -52225,8 +52226,47 @@ function updateElo(winner, loser) {
         loser.probability += loserUpdatedProbability;
     }
 
-    // select next matchup
-    selectMatchups();
+    numOfRounds++;
+    
+    if (numOfRounds == 10) {
+        function sortOrder(property) {
+            return function(a, b) {
+                return b[property] - a[property];
+            }
+        }
+
+        eras.sort(sortOrder('elo'));
+        console.log(eras);
+
+        const erasSerialized = JSON.stringify(eras);
+        sessionStorage.setItem('results', erasSerialized);
+        window.location.href = 'results.html';
+    } else {
+        selectMatchups();
+    }
+}
+
+function displayResults() {
+    // retrieve sorted eras array from sessionStorage
+    const erasStored = sessionStorage.getItem('results');
+    const results = JSON.parse(erasStored);
+    console.log(results);
+
+    // display results
+    const first = results[0].name;
+    const second = results[1].name;
+    const third = results[2].name;
+    const fourth = results[3].name;
+
+    const firstId = document.getElementById('first');
+    const secondId = document.getElementById('second');
+    const thirdId = document.getElementById('third');
+    const fourthId = document.getElementById('fourth');
+
+    firstId.innerHTML = `1. ${first}`;
+    secondId.innerHTML = `2. ${second}`;
+    thirdId.innerHTML = `3. ${third}`;
+    fourthId.innerHTML = `4. ${fourth}`;
 }
 
 // enable functions to be accessed globally
@@ -52237,6 +52277,7 @@ window.rightClick = rightClick;
 window.leftBtn = leftBtn;
 window.rightBtn = rightBtn;
 window.displayTracks = displayTracks;
+window.displayResults = displayResults;
 }).call(this)}).call(this,require("buffer").Buffer)
 },{"./library":1,"buffer":225,"request":114,"spotify-web-api-js":129}],170:[function(require,module,exports){
 
