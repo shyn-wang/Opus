@@ -22,7 +22,6 @@ html, body {
 
 .sides {
     flex: 1;
-    border: 1px solid black;
     display: flex;
     position: relative;
     align-items: center;
@@ -58,15 +57,11 @@ html, body {
 }
 
 #left:hover {
-    background: 
-      linear-gradient(206deg, rgba(117,255,144,0.62), rgba(15,201,220,1)),
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='6.97' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    cursor: pointer;
 }
 
 #right:hover {
-    background: 
-      linear-gradient(206deg, rgba(117,255,144,0.62), rgba(15,201,220,1)),
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='6.97' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    cursor: pointer;
 }
 
 .trackTitle {
@@ -120,6 +115,10 @@ html, body {
     margin-left: 5px;
     font-size: 15px;
     font-family: 'circular';
+}
+
+.albumCover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 

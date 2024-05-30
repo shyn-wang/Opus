@@ -10,15 +10,15 @@
     <div class = 'stage'>
         <div class = 'sides' id ='left' onclick="leftClick()">
             <div class ='left'>
-                <img src="" alt="" width = 260' height = '260' id="leftCover">
+                <img src="" alt="" width = 260' height = '260' class="albumCover" id="leftCover">
                 <h1 class="trackTitle" id="leftTitle"></h1>
                 <h3 class="description" id="leftDescription">Performer, Composer</h1>
                 <audio src="" controls id="leftPreview"></audio>
-                <button type="button" class="container" onclick="leftBtn()">
+                <button type="button" class="container" id="leftButton" onclick="leftBtn()">
                     <div class = "spotifyBtn">
                         <img src="images/spotifyicon.png" alt="" class="img">
                     </div>
-                    <div class="spotifyText">
+                    <div class="spotifyText" id="leftButtonLabel">
                         Open in Spotify
                     </div>
                 </button>
@@ -26,15 +26,15 @@
         </div>
         <div class = 'sides' id ='right' onclick="rightClick()">
             <div class ='right'>
-                <img src="" alt="" width = '260' height = '260' id="rightCover">
+                <img src="" alt="" width = '260' height = '260' class="albumCover" id="rightCover">
                 <h1 class="trackTitle" id="rightTitle"></h1>
                 <h3 class="description" id="rightDescription">Performer, Composer</h1>
                 <audio src="" controls id="rightPreview"></audio>
-                <button type="button" class="container" onclick="rightBtn()">
+                <button type="button" class="container" id="rightButton" onclick="rightBtn()">
                     <div class = "spotifyBtn">
                         <img src="images/spotifyicon.png" alt="" class="img">
                     </div>
-                    <div class="spotifyText">
+                    <div class="spotifyText" id="rightButtonLabel">
                         Open in Spotify
                     </div>
                 </button>

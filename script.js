@@ -2,6 +2,9 @@
 const Spotify = require('spotify-web-api-js');
 const spotifyApi = new Spotify();
 
+// set up color thief
+const ColorThief = require('colorthief');
+
 // import request to make post requests
 const request = require('request');
 
@@ -79,6 +82,51 @@ function displayTracks(leftTrack, rightTrack) {
     // **left side**
     // album cover
     const coverLeft = leftTrack.album.images[1].url;
+
+    ColorThief.getPalette(coverLeft, 5)
+        .then(palette => { 
+            const colorLeftOne = palette[0];
+            console.log(colorLeftOne);
+
+            const colorLeftTwo = palette[1];
+            console.log(colorLeftTwo);
+
+            const leftSideId = document.getElementById('left');
+            leftSideId.style.background = `linear-gradient(206deg, rgb(${colorLeftOne[0]}, ${colorLeftOne[1]}, ${colorLeftOne[2]}), rgb(${colorLeftTwo[0]}, ${colorLeftTwo[1]}, ${colorLeftTwo[2]})`;
+
+            const leftTitleId = document.getElementById('leftTitle');
+            leftTitleId.style.color = `rgb(${colorLeftTwo[0]}, ${colorLeftTwo[1]}, ${colorLeftTwo[2]})`;
+
+            const leftDescriptionId = document.getElementById('leftDescription');
+            leftDescriptionId.style.color = `rgba(${colorLeftTwo[0]}, ${colorLeftTwo[1]}, ${colorLeftTwo[2]}, 0.8)`;
+
+            const leftButtonId = document.getElementById('leftButton');
+            leftButtonId.style.backgroundColor = `rgba(${colorLeftOne[0]}, ${colorLeftOne[1]}, ${colorLeftOne[2]}, 0.3)`;
+
+            const leftButtonLabelId = document.getElementById('leftButtonLabel');
+            leftButtonLabelId.style.color = `rgb(${colorLeftTwo[0]}, ${colorLeftTwo[1]}, ${colorLeftTwo[2]})`;
+
+            leftSideId.addEventListener('mouseenter', function() {
+                leftSideId.style.background = leftSideId.style.background = `linear-gradient(206deg, rgba(${colorLeftOne[0]}, ${colorLeftOne[1]}, ${colorLeftOne[2]}, 0.62), rgba(${colorLeftTwo[0]}, ${colorLeftTwo[1]}, ${colorLeftTwo[2]}, 1)), url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='6.97' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
+            });
+
+            leftSideId.addEventListener('mouseleave', function() {
+                leftSideId.style.background = `linear-gradient(206deg, rgb(${colorLeftOne[0]}, ${colorLeftOne[1]}, ${colorLeftOne[2]}), rgb(${colorLeftTwo[0]}, ${colorLeftTwo[1]}, ${colorLeftTwo[2]}))`;
+            });
+
+            function generateShadowColor(rgbColor) {
+                // Reduce the brightness of the color for the shadow effect
+                const shadowColor = rgbColor.map(component => Math.max(0, component - 30));
+                return `rgba(${shadowColor[0]}, ${shadowColor[1]}, ${shadowColor[2]}, 0.8)`;
+            }
+
+            leftSideId.style.zIndex = 1;
+            leftSideId.style.boxShadow = `30px 0 60px ${generateShadowColor(colorLeftOne)}`;
+
+        })
+        .catch(err => { console.log(err) });
+
+    
     console.log(coverLeft);
     // piece title
     const titleLeft = leftTrack.name;
@@ -110,6 +158,49 @@ function displayTracks(leftTrack, rightTrack) {
     // **right side**
     // album cover
     const coverRight = rightTrack.album.images[1].url;
+
+    ColorThief.getPalette(coverRight, 5)
+        .then(palette => { 
+            const colorRightOne = palette[0];
+            console.log(colorRightOne);
+
+            const colorRightTwo = palette[1];
+            console.log(colorRightTwo);
+
+            const rightSideId = document.getElementById('right');
+            rightSideId.style.background = `linear-gradient(206deg, rgb(${colorRightOne[0]}, ${colorRightOne[1]}, ${colorRightOne[2]}), rgb(${colorRightTwo[0]}, ${colorRightTwo[1]}, ${colorRightTwo[2]})`;
+
+            const rightTitleId = document.getElementById('rightTitle');
+            rightTitleId.style.color = `rgb(${colorRightTwo[0]}, ${colorRightTwo[1]}, ${colorRightTwo[2]})`;
+
+            const rightDescriptionId = document.getElementById('rightDescription');
+            rightDescriptionId.style.color = `rgba(${colorRightTwo[0]}, ${colorRightTwo[1]}, ${colorRightTwo[2]}, 0.8)`;
+
+            const rightButtonId = document.getElementById('rightButton');
+            rightButtonId.style.backgroundColor = `rgba(${colorRightOne[0]}, ${colorRightOne[1]}, ${colorRightOne[2]}, 0.3)`;
+
+            const rightButtonLabelId = document.getElementById('rightButtonLabel');
+            rightButtonLabelId.style.color = `rgb(${colorRightTwo[0]}, ${colorRightTwo[1]}, ${colorRightTwo[2]})`;
+
+            rightSideId.addEventListener('mouseenter', function() {
+                rightSideId.style.background = rightSideId.style.background = `linear-gradient(206deg, rgba(${colorRightOne[0]}, ${colorRightOne[1]}, ${colorRightOne[2]}, 0.62), rgba(${colorRightTwo[0]}, ${colorRightTwo[1]}, ${colorRightTwo[2]}, 1)), url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='6.97' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
+            });
+
+            rightSideId.addEventListener('mouseleave', function() {
+                rightSideId.style.background = `linear-gradient(206deg, rgb(${colorRightOne[0]}, ${colorRightOne[1]}, ${colorRightOne[2]}), rgb(${colorRightTwo[0]}, ${colorRightTwo[1]}, ${colorRightTwo[2]}))`;
+            });
+
+            function generateShadowColor(rgbColor) {
+                // Reduce the brightness of the color for the shadow effect
+                const shadowColor = rgbColor.map(component => Math.max(0, component - 30));
+                return `rgba(${shadowColor[0]}, ${shadowColor[1]}, ${shadowColor[2]}, 0.8)`;
+            }
+
+            rightSideId.style.zIndex = 1;
+            rightSideId.style.boxShadow = `30px 0 60px ${generateShadowColor(colorRightOne)}`;
+        })
+        .catch(err => { console.log(err) });
+
     console.log(coverRight);
     // piece title
     const titleRight = rightTrack.name;
