@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'circular';
-    src: url('css/circular-std/CircularStd-Medium.otf');
+    src: url('/css/circular-std/CircularStd-Medium.otf');
   }
   
   @font-face {
     font-family: 'test';
-    src: url('css/circular-std/CircularStd-Book.otf');
+    src: url('/css/circular-std/CircularStd-Book.otf');
   }
 
 html, body {
