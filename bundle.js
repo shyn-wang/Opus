@@ -52257,6 +52257,17 @@ function displayResults() {
     const second = results[1].name;
     const third = results[2].name;
     const fourth = results[3].name;
+    let recommendedComposers;
+
+    if (first == 'romantic') {
+        recommendedComposers = ['Chopin', 'Liszt', 'Schubert'];
+    } else if (first == 'classical') {
+        recommendedComposers = ['Beethoven', 'Mozart', 'Haydn'];
+    } else if (first == 'baroque') {
+        recommendedComposers = ['J.S. Bach', 'Handel', 'Couperin'];
+    } else if (first == 'modern') {
+        recommendedComposers = ['Debussy', 'Ravel', 'Scriabin'];
+    }
 
     const firstId = document.getElementById('first');
     const secondId = document.getElementById('second');
@@ -52267,6 +52278,14 @@ function displayResults() {
     secondId.innerHTML = `2. ${second}`;
     thirdId.innerHTML = `3. ${third}`;
     fourthId.innerHTML = `4. ${fourth}`;
+
+    const composerOneId = document.getElementById('composerOne');
+    const composerTwoId = document.getElementById('composerTwo');
+    const composerThreeId = document.getElementById('composerThree');
+
+    composerOneId.innerHTML = recommendedComposers[0];
+    composerTwoId.innerHTML = recommendedComposers[1];
+    composerThreeId.innerHTML = recommendedComposers[2];
 }
 
 // enable functions to be accessed globally
