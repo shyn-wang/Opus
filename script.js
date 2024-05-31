@@ -379,6 +379,7 @@ function getRandomTrack(leftEra, rightEra) {
 
 // track number of rounds elapsed
 let numOfRounds = 0;
+let currentRound = 1;
 
 
 // update elo and probability function: call on side click
@@ -406,6 +407,8 @@ function updateElo(winner, loser) {
     }
 
     numOfRounds++;
+    currentRound++;
+    updateCurrentRound();
     
     if (numOfRounds == 10) {
         function sortOrder(property) {
@@ -466,6 +469,12 @@ function displayResults() {
     composerTwoId.innerHTML = recommendedComposers[1];
     composerThreeId.innerHTML = recommendedComposers[2];
 }
+
+function updateCurrentRound() {
+    const roundTrackerId = document.getElementById('roundTracker');
+    roundTrackerId.innerHTML = `${currentRound}/10`;
+}
+
 
 // enable functions to be accessed globally
 window.authenticate = authenticate;

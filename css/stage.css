@@ -123,4 +123,15 @@ html, body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
+#roundTracker {
+    position: absolute;
+    top: 93%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    font-family: 'circular';
+    font-size: 20px;
+}
