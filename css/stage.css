@@ -108,13 +108,15 @@ html, body {
     background-color: transparent;
     border-style: solid;
     border-color: transparent;
+    display: inline-block;
 }
 
 .spotifyText {
-    margin-top: 18px;
+    margin-top: 19px;
     margin-left: 5px;
     font-size: 15px;
     font-family: 'circular';
+    display: inline-block;
 }
 
 .albumCover {
