@@ -54724,12 +54724,15 @@ function displayTracks(leftTrack, rightTrack) {
     // album cover
     const coverLeft = leftTrack.album.images[1].url;
 
+    let colorLeftOne;
+    let colorLeftTwo;
+
     ColorThief.getPalette(coverLeft, 5)
         .then(palette => { 
-            const colorLeftOne = palette[0];
+            colorLeftOne = palette[0];
             console.log(colorLeftOne);
 
-            const colorLeftTwo = palette[1];
+            colorLeftTwo = palette[1];
             console.log(colorLeftTwo);
 
             const leftSideId = document.getElementById('left');
@@ -54800,12 +54803,15 @@ function displayTracks(leftTrack, rightTrack) {
     // album cover
     const coverRight = rightTrack.album.images[1].url;
 
+    let colorRightOne;
+    let colorRightTwo;
+
     ColorThief.getPalette(coverRight, 5)
         .then(palette => { 
-            const colorRightOne = palette[0];
+            colorRightOne = palette[0];
             console.log(colorRightOne);
 
-            const colorRightTwo = palette[1];
+            colorRightTwo = palette[1];
             console.log(colorRightTwo);
 
             const rightSideId = document.getElementById('right');
